@@ -1,0 +1,49 @@
+\documentclass[a4paper]{jpconf}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{array}
+\usepackage{enumerate}
+
+% for DAS section?
+%\usepackage{amsmath}
+%\usepackage{amstext}
+%\usepackage{amssymb}
+%\usepackage{graphicx}
+
+\begin{document}
+\title{The CMS Data Management System}
+
+\author{M Giffels$^1$, Y Guo$^2$, V Kuznetsov$^3$,
+        N Magini$^1$ and T Wildish$^4$}
+
+\address{$^1$ CERN, CH-1211 Gen\`eve 23, Switzerland }
+\address{$^2$ Fermi National Accelerator Laboratory, Batavia, Il, USA }
+\address{$^3$ Cornell University, Ithaca, NY, USA }
+\address{$^4$ Princeton University, Princeton, NJ, USA }
+
+\ead{Nicolo.Magini@cern.ch}
+
+\begin{abstract}
+The data management elements in CMS are scalable, modular, and designed to work together. The main components are PhEDEx, the data transfer and location system; the Dataset Booking System (DBS), a metadata catalogue; and the Data Aggregation Service (DAS), designed to aggregate views and provide them to users and services. Tens of thousands of samples have been cataloged and petabytes of data have been moved since the run began. The modular system has allowed the optimal use of appropriate underlying technologies. In this presentation we will discuss the use of both Oracle and nonSQL databases to implement the data management elements as well as the individual architectures chosen. We will discuss how the data management system functioned during the first run, and what improvements are planned in preparation for 2015.
+\end{abstract}
+
+\section{Introduction}
+\input{introduction.tex}
+
+\section{PhEDEx}
+\input{section-phedex.tex}
+
+\section{DBS}
+\input{section-dbs.tex}
+
+\section{DAS}
+\input{section-das.tex}
+
+\section{Conclusions}
+\input{conclusions.tex}
+
+\par
+\input{bibliography}
+
+\end{document}
+
