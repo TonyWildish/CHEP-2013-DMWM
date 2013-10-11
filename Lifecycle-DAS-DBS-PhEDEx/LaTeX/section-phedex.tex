@@ -1,2 +1,35 @@
-\subsection{PhEDEx}
-blah blah
+\subsection{Scale tests of PhEDEx}
+
+
+\subsection{Testing new PhEDEx releases}
+
+The LifeCycle agent is used to test PhEDEx releases. For this purpose a
+private PhEDEx instance is set up in a testbed with a few nodes, and transfers
+between these nodes are driven using the LifeCycle agent to orchestrate the
+flow. In this procedure bug fixes and new features of new PhEDEx versions can
+be tested before releasing the version. 
+
+For special cases, such as bugs that occur under unusual consitions, the
+LifeCycle agent can be configured to reproduce these conditions, repeatedly
+and systematically.
+
+
+\subsection{Integration test of the webbased PhEDEx DataService}
+
+
+One of the harder things to test is the web-site access by different users
+with different access-rights. Rather than requiring the support of several
+people to systematically test the new release of the website, with all the
+coordination and overhead that implies, we can use the LifeCycle agant again.
+
+We extend the private testbed to include a website, with self-signed
+certificates allocated to specific roles. The LifeCycle agent uses the website
+to perform a series of actions (create request, approve it, change its
+priority), repeating this workflow for each certificate, and for the different
+source and destination nodes. It checks that actions succeed where they should
+and fail where appropriate. In this way, several combinations of actions
+(inject, subscribe,...), destination nodes (T0, T1,...), and roles
+(site-admin, data-manager,...) can be tested in an automated way by
+configuring and running one single script.
+
+
