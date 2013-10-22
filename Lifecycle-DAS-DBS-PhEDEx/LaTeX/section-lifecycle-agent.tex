@@ -1,2 +1,32 @@
-\subsection{The LifeCycle Agent}
-blah blah
+\subsection{Basic concepts}
+The LifeCycle agent is designed to emulate the actions of users or external software processes in 
+a system. The key abstraction is the {\it workflow}, which consists of a sequence of {\it events} 
+that depend on each other and are performed at distinct intervals. A sample workflow for PhEDEx, 
+for example, could consist of the following events:
+
+\begin{itemize}
+  \item Generate data - a set of files are generated, organised into file-blocks and one 
+or more datasets
+  \item The files are injected into PhEDEx at a given site - i.e. PhEDEx is told these files 
+exist, and where the initial copy is maintained
+  \item The datasets are subscribed for transfer to one or more other sites
+  \item After a time, the data may be deleted from one or more of the sites
+\end{itemize}
+
+By varying the details of how the generated data is organised, which sites it is sent to, and 
+which sites (if any) it is finally deleted from, we can emulate the pattern of activity in several 
+real-life situations:
+
+\begin{itemize}
+  \item Prompt reconstruction at the Tier-0, from which data is sent to Tier-1s for custodial 
+storage
+  \item Monte Carlo production at Tier-2s, with subsequent upload to a Tier-1, re-distribution to 
+other Tier-2s, and cleanup at the original production site
+\end{itemize}
+
+Many workflows can run in parallel. This means we can emulate the production of dozens of 
+datasets, each destined for different sites, each with different characteristics, to give us a 
+realistic emulation of the total workload of the production transfer system.
+
+\subsection{Architecture}
+\subsection{Workflows and Payloads}
