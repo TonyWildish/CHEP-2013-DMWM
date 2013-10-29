@@ -30,17 +30,18 @@ maintain a minimum useful size to help scalability of storage and catalogues.
 The CMS computing infrastructure distinguishes between several tiers of computing centres, with a
 single Tier-0, several Tier-1s, and a large number of Tier-2s.
 
-The Tier-0 is responsible for custodial storage of a copy of the raw data, for prompt 
+The Tier-0 is responsible for custodial storage of a copy of the raw data, for calibration and prompt 
 reconstruction and for distributing the raw and reconstructed data to the collaboration. The 
-Tier-1s between them maintain a second custodial copy of the raw data, and distribute data further 
-to the Tier-2s. The Tier-2 sites are where the physicists perform their analyses. Monte carlo data 
-is produced at the Tier-2s and uploaded to the Tier-1s for distribution to other sites.
+Tier-1s between them maintain a second custodial copy of the raw data, host Monte Carlo production and
+re-reconstruction, and distribute data further to the Tier-2s.
+The Tier-2 sites are where the physicists perform their analyses. Monte Carlo data 
+produced at the Tier-2s is uploaded to the Tier-1s for distribution to other sites.
 
-The original computing model called for a hierarchical organisation of tiers, with each Tier-2 
+The original computing model \cite{CTDR} called for a hierarchical organisation of tiers, with each Tier-2 
 attached to a single Tier-1 and each Tier-1 serving only a handful of Tier-2s. For our system (one 
-Tier-0, 7 Tier-1s, and about 50 Tier-2s) this would mean less than 100 data-transfer links. In 
+Tier-0, 7 Tier-1s, and about 50 Tier-2s) this would mean less than 100 bidirectional data-transfer links. In 
 practice, we now allow Tier-2s to connect to all Tier-1s and to all other Tier-2s, resulting in a 
-fully-connected mesh of aboutt 2000 data-transfer links.
+fully-connected mesh of about 2000 data-transfer links.
 
 \subsection{Data location and the Trivial File Catalog}
 CMS does not use a central file catalog to store information about file location at each site. 
@@ -51,15 +52,15 @@ of each site.
 
 To achieve this, each site maintains a {\it Trivial File Catalog} (TFC), which is essentially a 
 regular-expression map from LFNs to PFNs and vice-versa. Anyone wishing to know the PFN for a file 
-at a site simply processes the LFN through the regular expressions in that sites TFC to obtain 
+at a site simply processes the LFN through the regular expressions in that site's TFC to obtain 
 their answer. This approach has several advantages:
 
 \begin{itemize}
   \item Batch jobs running at the site do not need to contact central services to perform LFN to 
 PFN conversions, they simply examine the local TFC
-  \item Sites can change their storage layout on the fly, without synchronising updates to a 
-central service. As long as they maintain their TFC in sync with their storage, this is 
+  \item Sites can change their storage layout on the fly, without synchronising cahnges in each PFN
+to a central service. As long as they maintain their TFC in sync with their storage, this is 
 transparent to the rest of the system
   \item Sites can perform complex matching for special situations. E.g. by matching the first 
-letter of a GUID portion of an LFN files can be load-balanced across several backend servers
+letter of a GUID portion of an LFN, files can be load-balanced across several backend servers
 \end{itemize}
