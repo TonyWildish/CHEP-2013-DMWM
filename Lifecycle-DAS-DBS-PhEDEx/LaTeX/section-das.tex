@@ -1,26 +1,24 @@
 \subsection{Data Aggregation Service}
-The Data Aggregation Service (DAS) \cite{DAS} is critical component of CMS Data
-Management System. It provides ability to query CMS data-services via uniform
+The Data Aggregation Service (DAS) \cite{DAS} is a critical component of the CMS Data
+Management System. It provides the ability to query CMS data-services via a uniform
 query language without worrying about security policies and differences in
-underlying data representations. When physiscists posses a question like {\it
-"Find me files from RelVal dataset at certain site"}, DAS converts it into
-series of requests to underlying CMS data-services. Upon processing requested
-data DAS takes care of aligning naming conventions, data convertion into common
+underlying data representations. When a physicist poses a question like {\it ``Find me files from RelVal dataset at certain site"}, DAS converts the question into a
+series of requests to the underlying data-services. DAS takes care of aligning naming conventions, data conversion into common
 JSON format and aggregating data on a requested entity key, e.g. file names.
-As a result user gets back aggregated record across participated
+As a result, the user gets back an aggregated record across participating
 data-providers.  This workflow fits really well into LifeCycle design which
 utilize DAS as cross-check validation tool for its components.
 
-Within LifeCycle Agent DAS was configured to talk to participated DBS and
-Phedex systems. The queries were processed via DAS engine and presented back
-to the client. Since original data were requested within LifeCycle Agent itself
-we were able to compare initial data set with DAS output. This represents a
-unit test for data injection and retrival through different systems. We
-compared the following set of data:
-
-\begin{itemize}
-\item dataset injection into DBS system
-\item block and files injection into DBS and Phedex systems
-\item site content represented in Phedex system
-\end{itemize}
-
+% This is redundant with section 6, on the integration tests
+%A LifeCycle workflow was configured to use PhEDEx, DBS and DAS. Data were
+%injected into PhEDEx and DBS, then retrieved in DAS and presented back to the
+%workflow. Since the original data were generated within the workflow, it was
+%able to compare the initial data with the output from DAS. This represents a
+%unit test for data injection and retrival through different systems. We
+%compared the following set of data:
+%
+%\begin{itemize}
+%\item dataset injection into DBS system
+%\item block and files injection into DBS and PhEDEx systems
+%\item site content represented in PhEDEx system
+%\end{itemize}
