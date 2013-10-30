@@ -9,14 +9,14 @@ The CMS data management system has several important tasks:
 The core components which achieve these goals are:
 \begin{itemize}
   \item PhEDEx \cite{PhEDEx}, the data-transfer management system
-  \item DBS \cite{DBS}, the Dataset Bookeeping Service
+  \item DBS \cite{DBS}, the Data Bookeeping Service
   \item DAS \cite{DAS}, the Data Aggregation Service
 \end{itemize}
 
 There are a number of other, more specialised services, such as the RunRegistry, SiteDB, 
 ConditionsDB and ReqMgr, but the core components are the ones the user mostly interacts with. All 
 the components of the data management system are designed and constructed separately, interacting 
-with each other and external users by means of web-services.
+with each other and external users by means of web services.
 
 CMS data is organised into datasets by physics content. Dataset size varies considerably, usually 
 in the range of 0.1 - 100 TB. Within a dataset, files are organised into {\it blocks} of 10 - 1000 
@@ -35,7 +35,7 @@ reconstruction and for distributing the raw and reconstructed data to the collab
 Tier-1s between them maintain a second custodial copy of the raw data, host Monte Carlo production and
 re-reconstruction, and distribute data further to the Tier-2s.
 The Tier-2 sites are where the physicists perform their analyses. Monte Carlo data 
-produced at the Tier-2s is uploaded to the Tier-1s for distribution to other sites.
+produced at the Tier-2s is uploaded to the Tier-1s for custodial storage and distribution to other sites.
 
 The original computing model \cite{CTDR} called for a hierarchical organisation of tiers, with each Tier-2 
 attached to a single Tier-1 and each Tier-1 serving only a handful of Tier-2s. For our system (one 
@@ -44,7 +44,7 @@ practice, we now allow Tier-2s to connect to all Tier-1s and to all other Tier-2
 fully-connected mesh of about 2000 data-transfer links.
 
 \subsection{Data location and the Trivial File Catalog}
-CMS does not use a central file catalog to store information about file location at each site. 
+CMS does not use a central file catalogue to store information about file location at each site. 
 Instead, files are known by their {\it Logical File Name} (LFN), which maps to a different {\it 
 Physical File Name} (PFN) at each site. We maintain the knowledge that a file exists at a site by 
 storing the LFN-to-site mapping (in PhEDEx), but the mapping from LFN to PFN is the responsibility 
@@ -57,10 +57,10 @@ their answer. This approach has several advantages:
 
 \begin{itemize}
   \item Batch jobs running at the site do not need to contact central services to perform LFN to 
-PFN conversions, they simply examine the local TFC
-  \item Sites can change their storage layout on the fly, without synchronising cahnges in each PFN
+PFN conversions, they simply examine the local TFC,
+  \item Sites can change their storage layout on the fly, without synchronising changes in each PFN
 to a central service. As long as they maintain their TFC in sync with their storage, this is 
-transparent to the rest of the system
+transparent to the rest of the system,
   \item Sites can perform complex matching for special situations. E.g. by matching the first 
-letter of a GUID portion of an LFN, files can be load-balanced across several backend servers
+letter of a GUID portion of an LFN, files can be load-balanced across several backend servers.
 \end{itemize}
