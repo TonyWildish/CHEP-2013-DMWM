@@ -1,42 +1,41 @@
-\subsection{Data Aggregation Service}
 
 The Data Aggregation Service (DAS) \cite{DAS} was designed to provide a uniform
 access to distributed CMS data-services regardless of their security policies,
-implementation details and data storage solution. DAS provides users ability to
-query underlying data-services via DAS Query Language (QL). It also aggregates
-meta-data information from various data-service APIs into common records
-suitable for end-users. Here we discuss details of DAS architecture and
+implementation details and data storage solution. DAS provides users with the ability to
+query underlying data-services via the DAS Query Language (QL). It also aggregates
+metadata information from various data-service APIs into common records
+suitable for end users. Here we discuss the details of DAS architecture and the
 current status of the system.
 
-DAS was build on top of NoSQL document-oriented database (MongoDB
-\cite{MongoDB}). It provides several benefits for DAS use case: schema-less
-storage, embeded query language and very fast read/write
-operations.\footnote{Our benchmark shown that MongoDB can sustain 20k doc/sec
-for reading and 7k doc/sec for writing operations, respectively.}
-DAS has modular design based on MVC architecture \cite{MVC} and performs the
+DAS was built on top of a NoSQL document-oriented database (MongoDB
+\cite{MongoDB}). It provides several benefits for the DAS use case: schema-less
+storage, embedded query language and very fast read/write
+operations.\footnote{Our benchmark showed that MongoDB can sustain 20k doc/s
+for reading and 7k doc/s for writing operations, respectively.}
+DAS has a modular design based on the MVC architecture \cite{MVC} and performs the
 following workflow upon user query:
 
 \begin{itemize}
-\item fetch data from underlying data-service via existing APIs
-\item store unprocessed data into cache database
-\item process data and perform its transformation to common data representation
+\item fetch data from underlying data-services via existing APIs
+\item store unprocessed data into the cache database
+\item process data and perform its transformation to a common data representation
 (we unify differences in naming conventions, units and data-formats, etc.)
 \item aggregate data on a requested key, e.g. dataset, block, etc.
-\item store results into merge database
-\item present results to end-users via and provide set of filters as well as
-aggregation functions to perform basic operation for slicing and representing
+\item store results into the merge database
+\item present results to end-users and provide a set of filters as well as
+aggregation functions to perform basic operations for slicing and representing
 the data suitable for user tasks
 \end{itemize}
 
-Such design allowed to developed DAS in data agnostic manner. For instance,
+Such design allowed to developed DAS in a data agnostic manner. For instance,
 data can be fetched from underlying data-services regardless of their data format, e.g.
-JSON, XML, CSV, etc. The data transformation was done via external set of
-mapping which was maintaned separately from DAS code development. It also gave
+JSON, XML, CSV, etc. The data transformation was done via an external set of
+mappings which was maintaned separately from DAS code development. It also gave
 us a few benefits which were not foreseen from the design cycle. For example,
-data aggregation on common entity, e.g. data name, may show discrepancies in
-underlying services if it exists.
+data aggregation on a common entity, e.g. data name, may show any existing discrepancy in
+underlying services.
 
-DAS uses in-house Query Language which was based on entity relationship used by
+DAS uses an in-house Query Language which was based on entity relationships used by
 physicists, see \cite{DAS}. It consists of the following structure:
 
 \begin{verbatim}
@@ -45,45 +44,45 @@ physicists, see \cite{DAS}. It consists of the following structure:
 
 The selection keys were based on well known entities such as dataset, block, file,
 run. The conditions were formed via key=value pairs. DAS-QL
-provides limited set of filters such as grep, unique,
-as well as set of common aggregation function such as
-sum, min, max. The former supported condition operators and groupping, while
-later can be extended via custom map-reduce functions to support more complex
+provides a limited set of filters such as grep, unique,
+as well as set of common aggregation functions such as
+sum, min, max. The former support conditional operators and grouping, while
+the latter can be extended via custom map-reduce functions to support more complex
 use cases. Therefore to express a question {\it Find me all datasets at a
-given site and show only those who has size more then 50} someone will need to
+given site and show only those which have size greater than 50} someone will need to
 write a DAS query in the following way:
 
 \begin{verbatim}
 dataset site=XYZ | grep dataset.name, dataset.size>50
 \end{verbatim}
 
-Turns out that such flexibility were not always clear to certain set of users,
-mostly those who were unfamiliar with DAS-QL syntax. Therefore a further
+It turns out that such flexibility was not always clear to some users,
+mostly those who were unfamiliar with the DAS-QL syntax. Therefore a further
 attempt was made to build native support for keyword queries on top of DAS-QL,
 see \cite{DASKWS}.
 
 DAS operates as an intelligent cache in front of CMS data-services. It stores
-results into two caches upon provided query. The raw-cache is used to store results from
+results into two caches upon a provided query. The raw-cache is used to store results from
 data-services {\it as is}, while the merge-cache stores aggregated
 records. The lifetime of the records is based on information provided by
-data-providers via HTTP headers. The records maintenance is done in a lazy
-fashion, i.e. upon new user query expired records are wiped out from the cache,
-while new ones come in. DAS server performs many operation in parallel, e.g.
+data providers via HTTP headers. The record maintenance is done in a lazy
+fashion, i.e. upon a new user query expired records are wiped out from the cache,
+while new ones come in. DAS server performs many operations in parallel, e.g.
 it sends concurrent HTTP requests to underlying data-services, processes and
 stores
 data using multiple threads, and runs multiple monitoring and pre-fetching
 daemons. The server runs on a single 8-core node with 24 GB of memory
 required for efficient MongoDB operations\footnote{MongoDB relies on indexes
-fitted in RAM to provides its superior speed}.
+fitted in RAM to provide its superior speed}.
 
-The discussed modular design, flexible QL and NoSQL storage, allows DAS to
+The discussed modular design, flexible QL and NoSQL storage allows DAS to
 aggregate information from distributed data-services without imposing any
 requirements on them. DAS is able to deal with different security models,
 various APIs, data-formats and naming conventions. Right now it uses dozens of CMS
 data-services. Data are aggregated into JSON records based on common entity
-keys such that it is possible to see information from multiple
+keys so that it is possible to see information from multiple
 data-services in a single record, e.g. run information comes from DBS, Condition DB and
-RunRegistry and represented as single JSON document listed information from
-three data-services. Daily load on DAS server is constanly growing and has about 10k
-queries/day with $\sim O(10M)$ records going in and out of DAS cache.
+RunRegistry and is represented as a single JSON document listing information from
+three data-services. Daily load on the DAS server is constanly growing and has about 10k
+queries/day with $\sim O(10M)$ records going in and out of the DAS cache.
 

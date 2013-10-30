@@ -1,11 +1,11 @@
 The decision to base Data Management on independent core components, with a common user interface provided by the Data Aggregation Service, has brought CMS several advantages.
-Each of the underlying services is based on the most appropriate technology and can be optimized independently for scalability, evolving without disrupting the overall system.
+Each of the underlying services is based on the most appropriate technology and can be optimised independently for scalability, evolving without disrupting the overall system.
 
 The components are interfaced to each other through a common CMSWEB web service framework, which simplifies integration and regression testing when rolling out new service versions.
 Exposing the Data Management components through web service interfaces also allows to easily build external services that can integrate their information in a clean manner.
 
 For example, the Victor \cite{victor} data cleaning service was developed in 2011 to identify data replicas that are no longer accessed, and can be deleted without disrupting user analysis.
-Victor is interfaced to PhEDEx through the data service to discover the dataset replicas at each site and the overall space usage at the sites, and queries a dataset popularity service for the access frequency of file replicas. Combining these data, it can then provide lists of the least accessed dataset replicas to delete to free up space at full sites.
-Looking ahead, another possible extension of the system would be an external dynamic data placement service that is able to request in PhEDEx new replicas of heavily accessed datasets, also querying the dataset popularity service.
+Victor is interfaced to PhEDEx through the data service to discover dataset replicas at each site and overall space usage at the sites, and queries a dataset popularity service for the access frequency of file replicas. Combining these data, Victor can then provide lists of the least accessed dataset replicas to be deleted freeing up space at full sites.
+Looking ahead, the system could be further extended with an external dynamic data placement service, interfaced to PhEDEx to place requests for new replicas of the datasets that are most heavily accessed according to the popularity service.
 
-In conclusion, CMS has developed a Data Management system that performed successfully during LHC Run 1, can be flexibly extended and is ready to manage the increased scale of data production during the second run of LHC.
+In conclusion, CMS has developed a Data Management system that performed successfully during the first LHC run, can be flexibly extended and is ready to manage the increased scale of data production during the second run of LHC.

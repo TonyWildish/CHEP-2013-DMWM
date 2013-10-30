@@ -2,16 +2,16 @@ The Physics Experiment Data Export (PhEDEx) \cite{PhEDEx} project was started in
 
 PhEDEx is based on a high-availability Oracle database cluster hosted at CERN (Transfer Management Data Base, or TMDB) acting as a ``blackboard'' for the system state (data replica location and current tasks). Users can request transfers of datasets or blocks of files through the interactive PhEDEx web site \cite{phedexweb}; a web data service \cite{phedexdatasvc} is also available for integration with other CMS data management components.
 
-PhEDEx software daemon processes or ``agents'', based on the Perl Object Environment (POE) framework, then  connect to the central database to retrieve their work queue, and write back to TMDB the result of their actions.
+PhEDEx software daemon processes or ``agents'', based on the Perl Object Environment (POE) \cite{poe} framework, then  connect to the central database to retrieve their work queue, and write back to TMDB the result of their actions.
 The TMDB has been carefully designed to minimize locking contention between the several agents and cache
 coherency issues by using a row ``ownership'' model where only one specialized agent at a time is expected to act on a given set of rows.
-Each of the agents performs a specific task, progressing the transfer state machine to the desired final state: creating a new replica of the files at the destination.
+Each of the agents performs a specific task, progressing the transfer state machine towards the desired final state: creating a new replica of the files at the destination.
 
 Central agents running at CERN perform most of the intelligence of data routing and transfer task creation, expanding the blocks into their current file replicas, and calculating the path of least cost for each file from the available sources to the destination.
 The download agents running at the sites fetch these tasks from TMDB and initiate the file transfers using specific plugins
 for different grid middleware. To ensure reliability and robustness, each file transfer is independently verified, and intelligent backoff and retry policies are applied in case of failure, aiming for eventual completion of all transfer subscriptions.
 
-Performance metrics are constantly recorded in TMDB, summarizing snapshots of the TMDB state into dedicated status monitoring tables at regular intervals. Historical information is further aggregated from the status tables into time-series bins of data on transfer volume, transfer state counts, and number of failures. Since the website and data service only access these monitoring tables instead of the live tables to provide monitoring information, the performance of the user monitoring and of the transfer system are largely decoupled.
+Performance metrics are constantly recorded in TMDB, summarising snapshots of the TMDB state into dedicated status monitoring tables at regular intervals. Historical information is further aggregated from the status tables into time-series bins of data on transfer volume, transfer state counts, and number of failures. Since the website and data service only access these monitoring tables instead of the live tables to provide monitoring information, the performance of the user monitoring and of the transfer system are largely decoupled.
 
 Additional data management actions that may be requested with PhEDEx and are executed by dedicated agents are data deletion and data consistency verification.
 
@@ -19,19 +19,19 @@ Additional data management actions that may be requested with PhEDEx and are exe
 
 %The scalability of PhEDEx for replica location is ensured my minimizing the amount of location metadata that needs to be tracked in TMDB. First of all, only the site location of the data needs to be recorded, since the details on the physical locations of the files are encoded in the sites'Trivial File Catalogs. In addition, PhEDEx needs to keep a long-term record only of the locations of block replicas: individual file replicas in a block are only needed while the block is in active transfer, and are collapsed again into the block after the block transfer is completed.
 
-During LHC Run 1, CMS steadily transferred data with PhEDEx with peaks in global speed exceeding 5 GB/s, distributing more than 100 PB of replicas over all sites.
+During the first run of LHC, CMS steadily transferred data with PhEDEx with peaks in global speed exceeding 5 GB/s, distributing more than 100 PB of replicas over all sites.
 
 
 The scalability of PhEDEx as transfer management system was proven multiple times in the past with realistic simulations running in dedicated testbed instances, where the aggregated simulated transfer rates were pushed far beyond the requirements of CMS. The tool used to run the tests was the ``lifecycle agent'' \cite{lifecycle}, designed to exercise all components of the system for an extended period of time.
 The lifecycle agent simulates the behavior of CMS data production components and users, regularly injecting new file replicas at various
 nodes on a clone of the production infrastructure. It then subscribes data to other nodes for transfer, and requests deletion of some of the data.
-The site download agents in the testbed are set up to execute fake transfers with a configurable bandwidth and failure probability, to exercise error handling and retries.
+The site download agents in the testbed are set up to execute fake transfers with a configurable bandwidth and failure probability, exercising error handling and retries.
 During the latest stress test with the lifecycle agent in 2011, the system continued to work well running simulated transfers at rates at least ten times higher than the scale of production transfers.
 
 
 \subsection{PhEDEx improvements}
 
-PhEDEx has been stable during data taking in LHC Run 1, with development focused on adding support for more flexible workflows, and on providing more tools to the transfer operators.
+PhEDEx was a mature product during data taking in LHC Run 1, and development was focused on adding support for more flexible workflows, and on providing more tools for the transfer operators.
 PhEDEx 4.0 was released in early 2011 and added full support for transfers and deletions of individual blocks, allowing to subscribe only a part of a dataset. PhEDEx 4.1, deployed in 2012, included a new monitoring system for transfer latencies, which was described in \cite{phedexlatency}.
-In this release cycle the core agent and namespace libraries were also gradually refactored \cite{phedexframework} and can now be used in other projects; the Namespace framework, in particular, was the base for the new storage monitoring system \cite{storagemon}.
-Current effort is dedicated on a new framework to handle user and operator requests, able for example to support requests to invalidate data \cite{phedexrequests}.
+In this release cycle the core agent and namespace libraries were also gradually refactored \cite{phedexframework} and can now be used in other projects; the Namespace framework, in particular, was the base for the new storage space monitoring system \cite{storagemon}.
+Current effort is dedicated to a new framework to handle user and operator requests, able for example to support requests to invalidate data \cite{phedexrequests}.
