@@ -22,11 +22,11 @@ Additional data management actions that may be requested with PhEDEx and are exe
 During the first run of LHC, CMS steadily transferred data with PhEDEx with peaks in global speed exceeding 5 GB/s, distributing more than 100 PB of replicas over all sites.
 
 
-The scalability of PhEDEx as transfer management system was proven multiple times in the past with realistic simulations running in dedicated testbed instances, where the aggregated simulated transfer rates were pushed far beyond the requirements of CMS. The tool used to run the tests was the ``lifecycle agent'' \cite{lifecycle}, designed to exercise all components of the system for an extended period of time.
-The lifecycle agent simulates the behavior of CMS data production components and users, regularly injecting new file replicas at various
+The scalability of PhEDEx as transfer management system was proven multiple times in the past with realistic simulations running in dedicated testbed instances, where the aggregated simulated transfer rates were pushed far beyond the requirements of CMS. The tool used to run the tests was the ``LifeCycle agent'' \cite{lifecycle}, designed to exercise all components of the system for an extended period of time.
+The LifeCycle agent simulates the behavior of CMS data production components and users, regularly injecting new file replicas at various
 nodes on a clone of the production infrastructure. It then subscribes data to other nodes for transfer, and requests deletion of some of the data.
 The site download agents in the testbed are set up to execute fake transfers with a configurable bandwidth and failure probability, exercising error handling and retries.
-During the latest stress test with the lifecycle agent in 2011, the system continued to work well running simulated transfers at rates at least ten times higher than the scale of production transfers.
+During the latest stress test with the LifeCycle agent in 2011, the system continued to work well running simulated transfers at rates at least ten times higher than the scale of production transfers.
 
 
 \subsection{PhEDEx improvements}

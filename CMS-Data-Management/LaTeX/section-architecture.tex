@@ -24,7 +24,7 @@ files, purely as an aid to scalability. The data management tools can manipulate
 of files, instead of entire datasets, which offers a finer granularity of control.
 
 Files are typically about 2.5 GB in size. Small files from various processes are merged to 
-maintain a minimum useful size to help scalability of storage and catalogues.
+maintain a minimum useful size to help scalability of storage and catalogs.
 
 \subsection{Computing infrastructure}
 The CMS computing infrastructure distinguishes between several tiers of computing centres, with a
@@ -44,7 +44,7 @@ practice, we now allow Tier-2s to connect to all Tier-1s and to all other Tier-2
 fully-connected mesh of about 2000 data-transfer links.
 
 \subsection{Data location and the Trivial File Catalog}
-CMS does not use a central file catalogue to store information about file location at each site. 
+CMS does not use a central file catalog to store information about file location at each site. 
 Instead, files are known by their {\it Logical File Name} (LFN), which maps to a different {\it 
 Physical File Name} (PFN) at each site. We maintain the knowledge that a file exists at a site by 
 storing the LFN-to-site mapping (in PhEDEx), but the mapping from LFN to PFN is the responsibility 

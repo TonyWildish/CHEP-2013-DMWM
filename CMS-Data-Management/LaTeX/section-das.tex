@@ -3,7 +3,7 @@ The Data Aggregation Service (DAS) \cite{DAS} was designed to provide a uniform
 access to distributed CMS data-services regardless of their security policies,
 implementation details and data storage solution. DAS provides users with the ability to
 query underlying data-services via the DAS Query Language (QL). It also aggregates
-metadata information from various data-service APIs into common records
+metadata information from various data-services into common records
 suitable for end users. Here we discuss the details of DAS architecture and the
 current status of the system.
 
@@ -24,10 +24,10 @@ following workflow upon user query:
 \item store results into the merge database
 \item present results to end-users and provide a set of filters as well as
 aggregation functions to perform basic operations for slicing and representing
-the data suitable for user tasks
+the data in a form suitable for user tasks
 \end{itemize}
 
-Such design allowed to developed DAS in a data agnostic manner. For instance,
+This design allowed to develop DAS in a data-agnostic manner. For instance,
 data can be fetched from underlying data-services regardless of their data format, e.g.
 JSON, XML, CSV, etc. The data transformation was done via an external set of
 mappings which was maintaned separately from DAS code development. It also gave
